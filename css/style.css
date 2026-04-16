@@ -118,6 +118,83 @@ body {
     margin-bottom: 30px;
 }
 
+.theme-selector {
+    margin-bottom: 20px;
+}
+
+.theme-selector label {
+    display: block;
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.theme-options {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 5px;
+    max-width: 100%;
+}
+
+.theme-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid #333;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+.theme-option:hover {
+    background: rgba(74, 158, 255, 0.1);
+    border-color: #4a9eff;
+}
+
+.theme-option.selected {
+    background: rgba(74, 158, 255, 0.2);
+    border-color: #4a9eff;
+    box-shadow: 0 0 15px rgba(74, 158, 255, 0.3);
+}
+
+.theme-preview {
+    width: 60px;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+.forest-preview {
+    background: linear-gradient(135deg, #1a3d1a 0%, #2d5a2d 50%, #1a4d1a 100%);
+}
+
+.desert-preview {
+    background: linear-gradient(135deg, #c4a35a 0%, #d4b36a 50%, #a08050 100%);
+}
+
+.dungeon-preview {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 50%, #3a3a4e 100%);
+}
+
+.theme-option span {
+    color: #ccc;
+    font-size: 0.85rem;
+}
+
+.theme-option.selected span {
+    color: #4a9eff;
+}
+
 .menu-buttons {
     display: flex;
     flex-direction: column;
@@ -501,6 +578,23 @@ body {
         padding: 20px;
     }
     
+    .theme-options {
+        gap: 10px;
+    }
+    
+    .theme-option {
+        padding: 8px 10px;
+    }
+    
+    .theme-preview {
+        width: 50px;
+        height: 35px;
+    }
+    
+    .theme-option span {
+        font-size: 0.75rem;
+    }
+    
     #health-bar-container, #exp-bar-container {
         width: 100px;
     }
@@ -531,6 +625,25 @@ body {
     .menu-btn {
         padding: 12px 30px;
         font-size: 1rem;
+    }
+    
+    .theme-options {
+        gap: 8px;
+        justify-content: flex-start;
+    }
+    
+    .theme-option {
+        padding: 8px 10px;
+        min-width: 85px;
+    }
+    
+    .theme-preview {
+        width: 50px;
+        height: 30px;
+    }
+    
+    .theme-option span {
+        font-size: 0.7rem;
     }
     
     #health-bar-container, #exp-bar-container {

@@ -6,6 +6,7 @@ class Game {
         this.state = 'menu';
         this.running = false;
         this.paused = false;
+        this.selectedTheme = 'forest';
         
         this.settings = {
             sfxVolume: 0.7,
@@ -25,15 +26,11 @@ class Game {
         this.projectilePool = new ProjectilePool(100);
         this.particleSystem = new ParticleSystem(this.particlePool);
         
-        this.map = new GameMap(2000, 2000, 'forest');
-        this.player = new Player(this.map.width / 2, this.map.height / 2);
-        this.enemyManager = new EnemyManager();
-        this.lootManager = new LootManager();
-        this.weaponManager = new WeaponManager(
-            this.player.skillManager,
-            this.projectilePool,
-            this.particlePool
-        );
+        this.map = null;
+        this.player = null;
+        this.enemyManager = null;
+        this.lootManager = null;
+        this.weaponManager = null;
         
         this.ui = new UI();
         this.input = new InputManager();
@@ -51,6 +48,14 @@ class Game {
 
     setupEventListeners() {
         window.addEventListener('resize', () => this.resize());
+
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.theme-option').forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                this.selectedTheme = option.dataset.theme;
+            });
+        });
 
         document.getElementById('start-btn').addEventListener('click', () => {
             this.start();
@@ -144,6 +149,16 @@ class Game {
         audioManager.init();
         audioManager.resume();
         
+        this.map = new GameMap(2000, 2000, this.selectedTheme);
+        this.player = new Player(this.map.width / 2, this.map.height / 2);
+        this.enemyManager = new EnemyManager();
+        this.lootManager = new LootManager();
+        this.weaponManager = new WeaponManager(
+            this.player.skillManager,
+            this.projectilePool,
+            this.particlePool
+        );
+        
         this.reset();
         this.state = 'playing';
         this.running = true;
@@ -198,6 +213,7 @@ class Game {
     reset() {
         this.gameTime = 0;
         
+        this.map.changeTheme(this.selectedTheme);
         this.map.reset();
         this.player.reset(this.map.width / 2, this.map.height / 2);
         this.enemyManager.reset();
