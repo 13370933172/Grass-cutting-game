@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Grass-cutting</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        
+        <div id="start-screen" class="screen">
+            <div class="screen-content">
+                <h1 class="game-title">🌿 Grass-cutting 🌿</h1>
+                <p class="game-subtitle">Grass-cutting</p>
+                <div class="menu-buttons">
+                    <button id="start-btn" class="menu-btn">开始游戏</button>
+                    <button id="help-btn" class="menu-btn">游戏帮助</button>
+                    <button id="settings-btn" class="menu-btn">游戏设置</button>
+                </div>
+                <div class="version-info">v1.0.0</div>
+            </div>
+        </div>
+
+        <div id="help-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>游戏帮助</h2>
+                <div class="help-content">
+                    <h3>操作说明</h3>
+                    <ul>
+                        <li><strong>移动：</strong>使用 WASD 或 方向键 控制角色移动</li>
+                        <li><strong>移动端：</strong>使用屏幕底部虚拟摇杆控制移动</li>
+                        <li><strong>攻击：</strong>角色会自动攻击周围敌人</li>
+                        <li><strong>技能：</strong>升级时可选择解锁或强化技能</li>
+                        <li><strong>暂停：</strong>按 ESC 或 P 键暂停游戏（移动端点击右上角暂停按钮）</li>
+                    </ul>
+                    <h3>游戏目标</h3>
+                    <p>消灭敌人获取经验值，升级强化角色，尽可能存活更长时间！</p>
+                    <h3>敌人类型</h3>
+                    <ul>
+                        <li><strong>史莱姆：</strong>基础敌人，移动缓慢</li>
+                        <li><strong>骷髅：</strong>中等敌人，会追踪玩家</li>
+                        <li><strong>蝙蝠：</strong>飞行敌人，移动迅速</li>
+                        <li><strong>哥布林：</strong>远程敌人，会投掷石块</li>
+                        <li><strong>BOSS：</strong>强大的敌人，击败可获得大量奖励</li>
+                    </ul>
+                </div>
+                <button id="help-back-btn" class="menu-btn">返回</button>
+            </div>
+        </div>
+
+        <div id="settings-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>游戏设置</h2>
+                <div class="settings-content">
+                    <div class="setting-item">
+                        <label>音效音量</label>
+                        <input type="range" id="sfx-volume" min="0" max="100" value="70">
+                        <span id="sfx-volume-value">70%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>背景音乐</label>
+                        <input type="range" id="bgm-volume" min="0" max="100" value="50">
+                        <span id="bgm-volume-value">50%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>显示FPS</label>
+                        <input type="checkbox" id="show-fps" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label>粒子效果</label>
+                        <select id="particle-quality">
+                            <option value="high">高</option>
+                            <option value="medium" selected>中</option>
+                            <option value="low">低</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="settings-back-btn" class="menu-btn">返回</button>
+            </div>
+        </div>
+
+        <div id="pause-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>游戏暂停</h2>
+                <div class="menu-buttons">
+                    <button id="resume-btn" class="menu-btn">继续游戏</button>
+                    <button id="restart-btn" class="menu-btn">重新开始</button>
+                    <button id="quit-btn" class="menu-btn">返回主菜单</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>游戏结束</h2>
+                <div class="game-stats">
+                    <p>存活时间: <span id="survival-time">0:00</span></p>
+                    <p>击败敌人: <span id="enemies-killed">0</span></p>
+                    <p>达到等级: <span id="final-level">1</span></p>
+                    <p>获得分数: <span id="final-score">0</span></p>
+                </div>
+                <div class="menu-buttons">
+                    <button id="retry-btn" class="menu-btn">再来一局</button>
+                    <button id="menu-btn" class="menu-btn">返回主菜单</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="level-up-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>🎉 升级！</h2>
+                <p>选择一个技能进行强化：</p>
+                <div id="skill-choices" class="skill-choices">
+                </div>
+            </div>
+        </div>
+
+        <div id="hud" class="hidden">
+            <div id="top-bar">
+                <div id="health-bar-container">
+                    <div id="health-bar"></div>
+                    <span id="health-text">100/100</span>
+                </div>
+                <div id="exp-bar-container">
+                    <div id="exp-bar"></div>
+                    <span id="exp-text">Lv.1</span>
+                </div>
+                <div id="timer">00:00</div>
+                <div id="kill-count">击杀: 0</div>
+            </div>
+            
+            <div id="skill-bar">
+                <div id="skill-slots"></div>
+            </div>
+            
+            <div id="minimap-container">
+                <canvas id="minimap-canvas"></canvas>
+            </div>
+            
+            <div id="fps-display" class="hidden">FPS: 60</div>
+            
+            <div id="joystick-container" class="joystick-container">
+                <div id="joystick-base" class="joystick-base">
+                    <div id="joystick-stick" class="joystick-stick"></div>
+                </div>
+            </div>
+            
+            <div id="pause-btn-mobile" class="pause-btn-mobile">⏸️</div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/objectPool.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/skill.js"></script>
+    <script src="js/weapon.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/loot.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/particle.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
