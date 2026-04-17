@@ -223,6 +223,166 @@ body {
     transform: scale(0.98);
 }
 
+.menu-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.menu-btn.small-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.multiplayer-content {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.multiplayer-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.multiplayer-section h3 {
+    color: #4a9eff;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.server-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.server-input-group input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.multiplayer-section input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+}
+
+.multiplayer-section input[type="text"]:focus {
+    outline: none;
+    border-color: #4a9eff;
+}
+
+.connection-status {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.connection-status.connected {
+    background: rgba(68, 255, 68, 0.2);
+    color: #44ff44;
+}
+
+.connection-status.disconnected {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+}
+
+.connection-status.connecting {
+    background: rgba(255, 200, 68, 0.2);
+    color: #ffc844;
+}
+
+.room-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(74, 158, 255, 0.1);
+    border-radius: 5px;
+    text-align: center;
+}
+
+.room-info p {
+    margin: 5px 0;
+    color: #fff;
+}
+
+.room-info #room-code {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4a9eff;
+    letter-spacing: 5px;
+}
+
+.copy-btn {
+    background: #4a9eff;
+    color: #fff;
+    border: none;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: 10px;
+    transition: background 0.2s;
+}
+
+.copy-btn:hover {
+    background: #3a8eef;
+}
+
+.copy-btn:active {
+    background: #2a7edf;
+}
+
+.copy-btn.copied {
+    background: #4caf50;
+}
+
+.room-hint {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.player-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.player-item {
+    padding: 8px 15px;
+    background: rgba(74, 158, 255, 0.2);
+    border: 1px solid #4a9eff;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.player-item.host {
+    background: rgba(255, 200, 68, 0.2);
+    border-color: #ffc844;
+}
+
+.player-item.host::after {
+    content: ' (房主)';
+    color: #ffc844;
+}
+
 .version-info {
     margin-top: 30px;
     color: #666;

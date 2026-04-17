@@ -33,6 +33,7 @@
                 </div>
                 <div class="menu-buttons">
                     <button id="start-btn" class="menu-btn">开始游戏</button>
+                    <button id="multiplayer-btn" class="menu-btn">局域网联机(测试版)</button>
                     <button id="help-btn" class="menu-btn">游戏帮助</button>
                     <button id="settings-btn" class="menu-btn">游戏设置</button>
                 </div>
@@ -134,6 +135,46 @@
             </div>
         </div>
 
+        <div id="multiplayer-screen" class="screen hidden">
+            <div class="screen-content">
+                <h2>局域网联机</h2>
+                <div class="multiplayer-content">
+                    <div class="multiplayer-section">
+                        <h3>服务器地址</h3>
+                        <div class="server-input-group">
+                            <input type="text" id="server-address" placeholder="ws://localhost:3001" value="ws://localhost:3001">
+                            <button id="connect-server-btn" class="menu-btn small-btn">连接</button>
+                        </div>
+                        <div id="connection-status" class="connection-status">未连接</div>
+                    </div>
+                    
+                    <div class="multiplayer-section">
+                        <h3>创建房间</h3>
+                        <input type="text" id="host-player-name" placeholder="你的昵称" maxlength="10">
+                        <button id="create-room-btn" class="menu-btn" disabled>创建房间</button>
+                        <div id="room-info" class="room-info hidden">
+                            <p>房间号: <span id="room-code">------</span> <button id="copy-room-code-btn" class="copy-btn">复制</button></p>
+                            <p class="room-hint">将房间号分享给其他玩家</p>
+                        </div>
+                    </div>
+                    
+                    <div class="multiplayer-section">
+                        <h3>加入房间</h3>
+                        <input type="text" id="join-player-name" placeholder="你的昵称" maxlength="10">
+                        <input type="text" id="join-room-id" placeholder="房间号" maxlength="6">
+                        <button id="join-room-btn" class="menu-btn" disabled>加入房间</button>
+                    </div>
+                    
+                    <div id="player-list-section" class="multiplayer-section hidden">
+                        <h3>房间玩家</h3>
+                        <div id="player-list" class="player-list"></div>
+                        <button id="start-multiplayer-btn" class="menu-btn" disabled>开始游戏</button>
+                    </div>
+                </div>
+                <button id="multiplayer-back-btn" class="menu-btn">返回</button>
+            </div>
+        </div>
+
         <div id="hud" class="hidden">
             <div id="top-bar">
                 <div id="health-bar-container">
@@ -171,6 +212,7 @@
     <script src="js/utils.js"></script>
     <script src="js/objectPool.js"></script>
     <script src="js/audio.js"></script>
+    <script src="js/network.js"></script>
     <script src="js/skill.js"></script>
     <script src="js/weapon.js"></script>
     <script src="js/player.js"></script>

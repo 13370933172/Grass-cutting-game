@@ -1,0 +1,19 @@
+{
+  "name": "grass-cutting-game",
+  "version": "1.0.0",
+  "description": "一款割草类游戏",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.0"
+  },
+  "keywords": [
+    "game",
+    "canvas",
+    "multiplayer"
+  ],
+  "license": "MIT"
+}
