@@ -197,6 +197,7 @@ class InputManager {
         
         this.joystick = {
             active: false,
+            touchId: null,
             startX: 0,
             startY: 0,
             currentX: 0,
@@ -229,6 +230,7 @@ class InputManager {
             const touch = e.touches[0];
             const rect = this.joystickBase.getBoundingClientRect();
             this.joystick.active = true;
+            this.joystick.touchId = touch.identifier;
             this.joystick.startX = rect.left + rect.width / 2;
             this.joystick.startY = rect.top + rect.height / 2;
             this.joystick.currentX = touch.clientX;
@@ -241,13 +243,7 @@ class InputManager {
             
             for (let i = 0; i < e.touches.length; i++) {
                 const touch = e.touches[i];
-                const joystickRect = this.joystickContainer.getBoundingClientRect();
-                
-                if (touch.clientX >= joystickRect.left - 50 && 
-                    touch.clientX <= joystickRect.right + 50 &&
-                    touch.clientY >= joystickRect.top - 50 &&
-                    touch.clientY <= joystickRect.bottom + 50) {
-                    
+                if (touch.identifier === this.joystick.touchId) {
                     this.joystick.currentX = touch.clientX;
                     this.joystick.currentY = touch.clientY;
                     this.updateJoystickPosition();
@@ -259,33 +255,33 @@ class InputManager {
         document.addEventListener('touchend', (e) => {
             if (!this.joystick.active) return;
             
-            let joystickTouchFound = false;
-            for (let i = 0; i < e.touches.length; i++) {
-                const touch = e.touches[i];
-                const joystickRect = this.joystickContainer.getBoundingClientRect();
-                
-                if (touch.clientX >= joystickRect.left - 50 && 
-                    touch.clientX <= joystickRect.right + 50 &&
-                    touch.clientY >= joystickRect.top - 50 &&
-                    touch.clientY <= joystickRect.bottom + 50) {
-                    joystickTouchFound = true;
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                if (touch.identifier === this.joystick.touchId) {
+                    this.joystick.active = false;
+                    this.joystick.touchId = null;
+                    this.joystick.moveX = 0;
+                    this.joystick.moveY = 0;
+                    this.resetJoystickPosition();
                     break;
                 }
             }
-            
-            if (!joystickTouchFound) {
-                this.joystick.active = false;
-                this.joystick.moveX = 0;
-                this.joystick.moveY = 0;
-                this.resetJoystickPosition();
-            }
         }, { passive: false });
 
-        document.addEventListener('touchcancel', () => {
-            this.joystick.active = false;
-            this.joystick.moveX = 0;
-            this.joystick.moveY = 0;
-            this.resetJoystickPosition();
+        document.addEventListener('touchcancel', (e) => {
+            if (!this.joystick.active) return;
+            
+            for (let i = 0; i < e.changedTouches.length; i++) {
+                const touch = e.changedTouches[i];
+                if (touch.identifier === this.joystick.touchId) {
+                    this.joystick.active = false;
+                    this.joystick.touchId = null;
+                    this.joystick.moveX = 0;
+                    this.joystick.moveY = 0;
+                    this.resetJoystickPosition();
+                    break;
+                }
+            }
         }, { passive: false });
     }
 
@@ -392,6 +388,7 @@ class InputManager {
         this.keys = {};
         this.mouse.down = false;
         this.joystick.active = false;
+        this.joystick.touchId = null;
         this.joystick.moveX = 0;
         this.joystick.moveY = 0;
         this.resetJoystickPosition();
